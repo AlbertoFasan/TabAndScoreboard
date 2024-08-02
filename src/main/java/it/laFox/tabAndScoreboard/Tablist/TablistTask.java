@@ -4,15 +4,13 @@ import io.papermc.paper.text.PaperComponents;
 import it.laFox.tabAndScoreboard.Settings.TabScoreboardSettings;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TablistTask implements Runnable {
 
@@ -40,23 +38,21 @@ public class TablistTask implements Runnable {
                     headerPosition = 0;
 
                 player.sendPlayerListHeader(
-                        miniMessage.deserialize(replaceVariables(player, headerLines.get(0).get(1)))
+                        Component.join(miniMessage.deserialize(replaceVariables(player, headerLines.get(i).get(headerPosition))),
+                        Component.newline(),
+                        miniMessage.deserialize(replaceVariables(player, headerLines.get(i).get(headerPosition))))
                 );
             }
 
 
-
-            for (int i = 0; i < footerLines.size(); i++) {
-
+            for (int i = 0; i < headerLines.size(); i++) {
                 if (footerPosition >= footerLines.get(i).size())
                     footerPosition = 0;
 
-
                 player.sendPlayerListFooter(
-
                         miniMessage.deserialize(replaceVariables(player, footerLines.get(i).get(footerPosition)))
-
                 );
+
             }
 
 
