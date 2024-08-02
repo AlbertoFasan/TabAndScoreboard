@@ -21,8 +21,8 @@ public final class TabScoreboardSettings {
 	private File file;
 	private FileConfiguration config;
 
-	private List<List<String>> headerLines;
-	private List<List<String>> footerLines;
+	private List<List<String>> headerLines = new ArrayList<>();
+	private List<List<String>> footerLines = new ArrayList<>();
 
 	private TabScoreboardSettings() {
 	}

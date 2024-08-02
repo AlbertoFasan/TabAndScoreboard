@@ -1,8 +1,10 @@
 package it.laFox.tabAndScoreboard.Tablist;
 
+import io.papermc.paper.text.PaperComponents;
 import it.laFox.tabAndScoreboard.Settings.TabScoreboardSettings;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,21 +36,29 @@ public class TablistTask implements Runnable {
             int footerPosition = footerPositions.getOrDefault(player.getUniqueId(), 0);
 
             for (int i = 0; i < headerLines.size(); i++) {
-                if (headerPosition >= headerLines.size())
+                if (headerPosition >= headerLines.get(i).size())
                     headerPosition = 0;
 
                 player.sendPlayerListHeader(
-                        miniMessage.deserialize(replaceVariables(player, headerLines.get(i).get(headerPosition))));
+                        miniMessage.deserialize(replaceVariables(player, headerLines.get(0).get(1)))
+                );
             }
+
+
 
             for (int i = 0; i < footerLines.size(); i++) {
 
-                if (footerPosition >= footerLines.size())
+                if (footerPosition >= footerLines.get(i).size())
                     footerPosition = 0;
 
-                player.sendPlayerListHeader(
-                        miniMessage.deserialize(replaceVariables(player, footerLines.get(i).get(footerPosition))));
+
+                player.sendPlayerListFooter(
+
+                        miniMessage.deserialize(replaceVariables(player, footerLines.get(i).get(footerPosition)))
+
+                );
             }
+
 
             headerPositions.put(player.getUniqueId(), headerPosition + 1);
             footerPositions.put(player.getUniqueId(), footerPosition + 1);
