@@ -1,6 +1,7 @@
 package it.laFox.tabAndScoreboard.Tablist;
 
 import it.laFox.tabAndScoreboard.Settings.TabScoreboardSettings;
+import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,6 +23,9 @@ public class TablistTask implements Runnable {
 
     @Override
     public void run() {
+        ForwardingAudience audience = Bukkit.getServer();
+
+
         List<String> headerLines = TabScoreboardSettings.getInstance().getHeaderLines();
         List<String> footerLines = TabScoreboardSettings.getInstance().getFooterLines();
         MiniMessage miniMessage = MiniMessage.miniMessage();
@@ -36,8 +40,10 @@ public class TablistTask implements Runnable {
             if (footerPosition >= footerLines.size())
                 footerPosition = 0;
 
-            player.sendPlayerListHeaderAndFooter(
-                    miniMessage.deserialize(replaceVariables(player, headerLines.get(headerPosition))),
+            player.sendPlayerListHeader(
+                    miniMessage.deserialize(replaceVariables(player, headerLines.get(headerPosition))));
+
+            player.sendPlayerListFooter(
                     miniMessage.deserialize(replaceVariables(player, footerLines.get(footerPosition))));
 
             headerPositions.put(player.getUniqueId(), headerPosition + 1);
