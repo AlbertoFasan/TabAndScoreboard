@@ -33,27 +33,37 @@ public class TablistTask implements Runnable {
             int headerPosition = headerPositions.getOrDefault(player.getUniqueId(), 0);
             int footerPosition = footerPositions.getOrDefault(player.getUniqueId(), 0);
 
+            String header = "";
+
             for (int i = 0; i < headerLines.size(); i++) {
+
+
                 if (headerPosition >= headerLines.get(i).size())
                     headerPosition = 0;
 
-                player.sendPlayerListHeader(
-                        Component.join(miniMessage.deserialize(replaceVariables(player, headerLines.get(i).get(headerPosition))),
-                        Component.newline(),
-                        miniMessage.deserialize(replaceVariables(player, headerLines.get(i).get(headerPosition))))
-                );
+                header += "<br>" + headerLines.get(i).get(headerPosition);
+
             }
 
+            player.sendPlayerListHeader(
+                    miniMessage.deserialize(replaceVariables(player, header))
+            );
 
-            for (int i = 0; i < headerLines.size(); i++) {
+
+            String footer = "";
+
+            for (int i = 0; i < footerLines.size(); i++) {
+
+
                 if (footerPosition >= footerLines.get(i).size())
                     footerPosition = 0;
 
-                player.sendPlayerListFooter(
-                        miniMessage.deserialize(replaceVariables(player, footerLines.get(i).get(footerPosition)))
-                );
-
+                footer += "<br>" + footerLines.get(i).get(footerPosition);
             }
+
+            player.sendPlayerListFooter(
+                    miniMessage.deserialize(replaceVariables(player, footer))
+            );
 
 
             headerPositions.put(player.getUniqueId(), headerPosition + 1);

@@ -12,7 +12,7 @@ public final class TabAndScoreboard extends JavaPlugin {
 
         TabScoreboardSettings.getInstance().load();
 
-        Bukkit.getScheduler().runTaskTimer(this, new TablistTask(), 20L, 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new TablistTask(), 20L, 20L);
 
     }
 

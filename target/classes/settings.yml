@@ -2,18 +2,20 @@ tablist:
   header:
     '0':
       lines:
-        - "<b><#ff2c14>Hello Hackathon"
+        - "<b><#ff2c14>Hello Hackathon</b>"
         - "<#ff6a00>This is the Tab And Scoreboard Plugin"
+        - "<#ffb88c>Tab and Scoreboard Plugin"
     '1':
       lines:
-        - "<b><#ff2c14>Hello Hackathon"
-        - "<#ff6a00>This is the Tab And Scoreboard Plugin"
+        - "<b><#4772ff>Hello Hackathon</b>"
+        - "<#ab5cff>This is the Tab And Scoreboard Plugin"
+        - "<#ffb88c>Tab and Scoreboard Plugin"
   footer:
     '0':
       lines:
-        - "<#f2ff00><i>Byyyyyyyyy</i>"
-        - "<#f2ff00><i>Hackathon</i>"
+        - "<#4772ff><i>Byyyyyyyyy</i>"
+        - "<#ab5cff><i>Hackathon</i>"
     '1':
       lines:
-        - "<#f2ff00><i>Byyyyyyyyy</i>"
-        - "<#f2ff00><i>Hackathon</i>"
+        - "<#4772ff><i>Byyyyyyyyy</i>"
+        - "<#ab5cff><i>Hackathon</i>"
