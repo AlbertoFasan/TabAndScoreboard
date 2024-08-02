@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public final class TabScoreboardSettings {
 
@@ -20,9 +21,8 @@ public final class TabScoreboardSettings {
 	private File file;
 	private FileConfiguration config;
 
-	private EntityType explodingType;
-	private List<String> headerLines;
-	private List<String> footerLines;
+	private List<List<String>> headerLines;
+	private List<List<String>> footerLines;
 
 	private TabScoreboardSettings() {
 	}
@@ -49,8 +49,30 @@ public final class TabScoreboardSettings {
 
 		}
 
-		headerLines = config.getStringList("tablist.header");
-		footerLines = config.getStringList("tablist.footer");
+		for (int i = 0; i < config.getConfigurationSection("tablist.header").getKeys(false).size(); i++) {
+
+			try {
+
+				headerLines.add(config.getConfigurationSection("tablist.header." + i).getStringList("lines"));
+
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		for (int i = 0; i < config.getConfigurationSection("tablist.footer").getKeys(false).size(); i++) {
+
+			try {
+
+				footerLines.add(config.getConfigurationSection("tablist.footer." + i).getStringList("lines"));
+
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 	public void save() {
@@ -68,15 +90,11 @@ public final class TabScoreboardSettings {
 		save();
 	}
 
-	public EntityType getExplodingType() {
-		return explodingType;
-	}
-
-	public List<String> getHeaderLines() {
+	public List<List<String>> getHeaderLines() {
 		return headerLines;
 	}
 
-	public List<String> getFooterLines() {
+	public List<List<String>> getFooterLines() {
 		return footerLines;
 	}
 

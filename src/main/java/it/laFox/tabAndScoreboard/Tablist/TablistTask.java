@@ -1,6 +1,7 @@
 package it.laFox.tabAndScoreboard.Tablist;
 
 import it.laFox.tabAndScoreboard.Settings.TabScoreboardSettings;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
@@ -23,28 +24,31 @@ public class TablistTask implements Runnable {
 
     @Override
     public void run() {
-        ForwardingAudience audience = Bukkit.getServer();
 
-
-        List<String> headerLines = TabScoreboardSettings.getInstance().getHeaderLines();
-        List<String> footerLines = TabScoreboardSettings.getInstance().getFooterLines();
+        List<List<String>> headerLines = TabScoreboardSettings.getInstance().getHeaderLines();
+        List<List<String>> footerLines = TabScoreboardSettings.getInstance().getFooterLines();
         MiniMessage miniMessage = MiniMessage.miniMessage();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             int headerPosition = headerPositions.getOrDefault(player.getUniqueId(), 0);
             int footerPosition = footerPositions.getOrDefault(player.getUniqueId(), 0);
 
-            if (headerPosition >= headerLines.size())
-                headerPosition = 0;
+            for (int i = 0; i < headerLines.size(); i++) {
+                if (headerPosition >= headerLines.size())
+                    headerPosition = 0;
 
-            if (footerPosition >= footerLines.size())
-                footerPosition = 0;
+                player.sendPlayerListHeader(
+                        miniMessage.deserialize(replaceVariables(player, headerLines.get(i).get(headerPosition))));
+            }
 
-            player.sendPlayerListHeader(
-                    miniMessage.deserialize(replaceVariables(player, headerLines.get(headerPosition))));
+            for (int i = 0; i < footerLines.size(); i++) {
 
-            player.sendPlayerListFooter(
-                    miniMessage.deserialize(replaceVariables(player, footerLines.get(footerPosition))));
+                if (footerPosition >= footerLines.size())
+                    footerPosition = 0;
+
+                player.sendPlayerListHeader(
+                        miniMessage.deserialize(replaceVariables(player, footerLines.get(i).get(footerPosition))));
+            }
 
             headerPositions.put(player.getUniqueId(), headerPosition + 1);
             footerPositions.put(player.getUniqueId(), footerPosition + 1);
